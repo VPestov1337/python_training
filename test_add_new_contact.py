@@ -17,6 +17,6 @@ def test_add_new_contact(app):
                           email="Email@kek.com", firstname="Ivan", lastname="Ivanov", title="Worker",
                           work_phone="555-555", aday="25", amonth="August", ayear="2018")
     app.add_new_contact(new_contact)
-    app.return_to_home_page()
+    app.open_home_page()
     app.logout()
 
