@@ -8,7 +8,7 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         wd.find_element_by_link_text("Logout").click()
-        time.sleep(0.05)
+        wd.find_element_by_name("user")
 
     def login(self, username, password):
         wd = self.app.wd
@@ -19,3 +19,4 @@ class SessionHelper:
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_id("LoginForm").submit()
+        
