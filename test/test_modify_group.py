@@ -1,3 +1,5 @@
+from model.group import Group
+
 
 def test_modify_group(app):
     if app.group.count() == 0:
