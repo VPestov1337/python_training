@@ -117,3 +117,7 @@ class ContactHelper:
         time.sleep(0.05)
         self.return_to_home_page()
 
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
+
