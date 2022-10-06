@@ -1,3 +1,4 @@
+import time
 
 from model.contact import Contact
 from selenium.webdriver.support.ui import Select
@@ -7,6 +8,10 @@ from selenium.webdriver.support.ui import Select
 class ContactHelper:
     def __init__(self, app):
         self.app = app
+
+    def return_to_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
 
     def simpleArrayModify(self, attributes):
         wd = self.app.wd
@@ -95,17 +100,20 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//body").click()
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_to_home_page()
 
     def modify_contact(self, attributesArray):
         wd = self.app.wd
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
         self.simpleArrayModify(attributesArray)
         wd.find_element_by_name('update').click()
+        self.return_to_home_page()
 
     def delete_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to.alert.accept()
-
+        time.sleep(0.05)
+        self.return_to_home_page()
 
