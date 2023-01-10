@@ -1,4 +1,4 @@
-
+import time
 from model.contact import Contact
 from selenium.webdriver.support.ui import Select
 
@@ -112,6 +112,7 @@ class ContactHelper:
         self.goToContactsPage()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
+        time.sleep(0.1)
         wd.switch_to.alert.accept()
 
     def modify_contact(self, attributesDict):

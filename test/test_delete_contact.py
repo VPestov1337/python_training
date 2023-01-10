@@ -1,4 +1,4 @@
-
+import time
 
 def test_delete_contact(app):
     app.session.login()
