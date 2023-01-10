@@ -9,14 +9,15 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def return_to_home_page(self):
+
+    def simpleArrayModify(self, attributesDict):
+        wd = self.app.wd
+        for i, (attribute, value) in enumerate(attributesDict.items()):
+            wd.find_element_by_name(Contact.atrLocDict[attribute]).clear()
+            wd.find_element_by_name(Contact.atrLocDict[attribute]).send_keys(value)
+    def goToContactsPage(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
-
-    def simpleArrayModify(self, attributes):
-        wd = self.app.wd
-        for i in attributes:
-            wd.find_element_by_name(i).send_keys(" Modified")
 
     def add_new(self, contact: Contact):
         wd = self.app.wd
@@ -102,22 +103,34 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.return_to_home_page()
 
-    def modify_contact(self, attributesArray):
+    def modify_contact(self, contact):
         wd = self.app.wd
+        self.goToContactsPage()
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
-        self.simpleArrayModify(attributesArray)
+        self.simpleArrayModify(contact)
         wd.find_element_by_name('update').click()
         self.return_to_home_page()
 
     def delete_contact(self):
         wd = self.app.wd
+        self.goToContactsPage()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
+        time.sleep(0.1)
         wd.switch_to.alert.accept()
         time.sleep(0.05)
         self.return_to_home_page()
 
+
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
+
+    def modify_contact(self, attributesDict):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
+        self.simpleArrayModify(attributesDict)
+        wd.find_element_by_name('update').click()
+
 
