@@ -1,4 +1,5 @@
 import time
+
 from model.contact import Contact
 from selenium.webdriver.support.ui import Select
 
@@ -7,6 +8,7 @@ from selenium.webdriver.support.ui import Select
 class ContactHelper:
     def __init__(self, app):
         self.app = app
+
 
     def simpleArrayModify(self, attributesDict):
         wd = self.app.wd
@@ -99,6 +101,7 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//body").click()
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_to_home_page()
 
     def modify_contact(self, contact):
         wd = self.app.wd
@@ -106,6 +109,7 @@ class ContactHelper:
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
         self.simpleArrayModify(contact)
         wd.find_element_by_name('update').click()
+        self.return_to_home_page()
 
     def delete_contact(self):
         wd = self.app.wd
@@ -114,6 +118,13 @@ class ContactHelper:
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         time.sleep(0.1)
         wd.switch_to.alert.accept()
+        time.sleep(0.05)
+        self.return_to_home_page()
+
+
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
 
     def modify_contact(self, attributesDict):
         wd = self.app.wd
@@ -121,4 +132,5 @@ class ContactHelper:
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
         self.simpleArrayModify(attributesDict)
         wd.find_element_by_name('update').click()
+
 

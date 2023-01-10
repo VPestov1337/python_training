@@ -1,7 +1,13 @@
+
+from model.contact import Contact
+
+
 def test_modify_contact(app):
-    app.session.login()
+    if app.contact.count() == 0:
+        app.contact.add_new(Contact(firstname="Ivan"))
     app.contact.modify_contact(attributesDict={"firstname": "lol", "middlename": "kek", "lastname": "TEST"})
-    app.session.logout()
+
+
 
 
 
