@@ -10,16 +10,10 @@ def test_add_new_contact(app):
     app.session.logout()
 
 
-def test_modify_contact(app):
-    app.session.login()
-    app.contact.modify_contact(attributesArray=['firstname', 'middlename', 'lastname', 'nickname', 'company',
-                                                      'email', 'title', 'work'])
-    app.session.logout()
 
 
-def test_delete_contact(app):
-    app.session.login()
-    app.contact.delete_contact()
+
+
 
 
 

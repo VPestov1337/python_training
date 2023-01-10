@@ -8,10 +8,14 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def simpleArrayModify(self, attributes):
+    def simpleArrayModify(self, attributesDict):
         wd = self.app.wd
-        for i in attributes:
-            wd.find_element_by_name(i).send_keys(" Modified")
+        for i, (attribute, value) in enumerate(attributesDict.items()):
+            wd.find_element_by_name(Contact.atrLocDict[attribute]).clear()
+            wd.find_element_by_name(Contact.atrLocDict[attribute]).send_keys(value)
+    def goToContactsPage(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
 
     def add_new(self, contact: Contact):
         wd = self.app.wd
@@ -96,16 +100,24 @@ class ContactHelper:
         wd.find_element_by_xpath("//body").click()
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def modify_contact(self, attributesArray):
+    def modify_contact(self, contact):
         wd = self.app.wd
+        self.goToContactsPage()
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
-        self.simpleArrayModify(attributesArray)
+        self.simpleArrayModify(contact)
         wd.find_element_by_name('update').click()
 
     def delete_contact(self):
         wd = self.app.wd
+        self.goToContactsPage()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to.alert.accept()
 
+    def modify_contact(self, attributesDict):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
+        self.simpleArrayModify(attributesDict)
+        wd.find_element_by_name('update').click()
 
