@@ -101,7 +101,7 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//body").click()
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        self.return_to_home_page()
+        self.goToContactsPage()
 
     def modify_contact(self, contact):
         wd = self.app.wd
@@ -109,7 +109,7 @@ class ContactHelper:
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
         self.simpleArrayModify(contact)
         wd.find_element_by_name('update').click()
-        self.return_to_home_page()
+        self.goToContactsPage()
 
     def delete_contact(self):
         wd = self.app.wd
@@ -119,7 +119,7 @@ class ContactHelper:
         time.sleep(0.1)
         wd.switch_to.alert.accept()
         time.sleep(0.05)
-        self.return_to_home_page()
+        self.goToContactsPage()
 
 
     def count(self):
