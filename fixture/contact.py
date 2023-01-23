@@ -98,19 +98,22 @@ class ContactHelper:
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
 
-    def modify_contact(self, contact):
+    def modify_contact_by_index(self, contact, index):
         wd = self.app.wd
         self.goToContactsPage()
-        wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
+        wd.find_elements_by_xpath('//*[contains(@href,"edit.php?id=")]')[index].click()
         self.fill_contact_fields(contact, wd)
         wd.find_element_by_name('update').click()
         self.goToContactsPage()
         self.contact_cache = None
 
     def delete_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.goToContactsPage()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         time.sleep(0.1)
         wd.switch_to.alert.accept()
