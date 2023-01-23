@@ -29,29 +29,3 @@ class Contact:
         self.lastname = lastname
         self.firstname = firstname
 
-    atrLocDict = {                 #dict for attributes-locators translation
-    "firstname": "firstname",
-    "middlename": "middlename",
-    "lastname": "lastname",
-    "nickname": "nickname",
-    "title": "title",
-    "company": "company",
-    "address": "address",
-    "homephone": "home",
-    "mobilephone": "mobile",
-    "work_phone": "work",
-    "fax": "fax",
-    "email": "email",
-    "email2": "email2",
-    "email3": "email3",
-    "homepage": "homepage",
-    "bday": "bday",
-    "bmonth": "bmonth",
-    "byear": "byear",
-    "aday": "aday",
-    "ayear": "ayear",
-    "address2": "address2",
-    "phone2": "phone2",
-    "notes": "notes"
-
-    }

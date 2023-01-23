@@ -4,17 +4,10 @@ from model.contact import Contact
 from selenium.webdriver.support.ui import Select
 
 
-
 class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-
-    def simpleArrayModify(self, attributesDict):
-        wd = self.app.wd
-        for i, (attribute, value) in enumerate(attributesDict.items()):
-            wd.find_element_by_name(Contact.atrLocDict[attribute]).clear()
-            wd.find_element_by_name(Contact.atrLocDict[attribute]).send_keys(value)
     def goToContactsPage(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
@@ -22,17 +15,21 @@ class ContactHelper:
     def add_new(self, contact: Contact):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+        self.fill_contact_fields(contact, wd)
+        wd.find_element_by_xpath("//body").click()
+        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.goToContactsPage()
+
+    def fill_contact_fields(self, contact, wd):
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        wd.find_element_by_name("theform").click()
         wd.find_element_by_name("middlename").click()
         wd.find_element_by_name("middlename").clear()
         wd.find_element_by_name("middlename").send_keys(contact.middlename)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
         wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        wd.find_element_by_name("theform").click()
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys(contact.nickname)
@@ -50,7 +47,6 @@ class ContactHelper:
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
         wd.find_element_by_name("home").send_keys(contact.homephone)
-        wd.find_element_by_name("theform").click()
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
         wd.find_element_by_name("mobile").send_keys(contact.mobilephone)
@@ -71,7 +67,6 @@ class ContactHelper:
         wd.find_element_by_name("email3").click()
         wd.find_element_by_name("email3").clear()
         wd.find_element_by_name("email3").send_keys(contact.email3)
-        wd.find_element_by_name("theform").click()
         wd.find_element_by_name("homepage").click()
         wd.find_element_by_name("homepage").clear()
         wd.find_element_by_name("homepage").send_keys(contact.homepage)
@@ -99,15 +94,12 @@ class ContactHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
-        wd.find_element_by_xpath("//body").click()
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        self.goToContactsPage()
 
     def modify_contact(self, contact):
         wd = self.app.wd
         self.goToContactsPage()
         wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
-        self.simpleArrayModify(contact)
+        self.fill_contact_fields(contact, wd)
         wd.find_element_by_name('update').click()
         self.goToContactsPage()
 
@@ -127,11 +119,6 @@ class ContactHelper:
         self.goToContactsPage()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def modify_contact(self, attributesDict):
-        wd = self.app.wd
-        self.goToContactsPage()
-        wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=")]').click()
-        self.simpleArrayModify(attributesDict)
-        wd.find_element_by_name('update').click()
+
 
 
