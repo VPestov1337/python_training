@@ -113,12 +113,22 @@ class ContactHelper:
         time.sleep(0.05)
         self.goToContactsPage()
 
-
     def count(self):
         wd = self.app.wd
         self.goToContactsPage()
         return len(wd.find_elements_by_name("selected[]"))
 
+    def get_contacts_list(self):
+        wd = self.app.wd
+        self.goToContactsPage()
+        contacts = []
+        for el in wd.find_elements_by_css_selector('[name="entry"]'):
+            cells = el.find_elements_by_css_selector("td")
+            lastname = cells[1].text
+            firstname = cells[2].text
+            id = el.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
+        return contacts
 
 
 
