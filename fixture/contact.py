@@ -147,11 +147,13 @@ class ContactHelper:
                 cells = el.find_elements_by_css_selector("td")
                 lastname = cells[1].text
                 firstname = cells[2].text
+                address = cells[3].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 all_emails = cells[4].text
                 all_phones = cells[5].text
                 self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id,
-                                                  all_phones_from_homepage=all_phones, all_emails=all_emails))
+                                                  all_phones_from_homepage=all_phones, all_emails=all_emails,
+                                                  address=address))
         return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
@@ -167,8 +169,10 @@ class ContactHelper:
         email = wd.find_element_by_name("email").get_attribute("value")
         email2 = wd.find_element_by_name("email2").get_attribute("value")
         email3 = wd.find_element_by_name("email3").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, homephone=homephone, work_phone=workphone,
-                       mobilephone=mobilephone, phone2=phone2, id=id, email=email, email2=email2, email3=email3)
+                       mobilephone=mobilephone, phone2=phone2, id=id, email=email, email2=email2, email3=email3,
+                       address=address)
 
     def get_contact_from_view_page(self,index):
         wd = self.app.wd
