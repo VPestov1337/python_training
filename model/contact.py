@@ -1,6 +1,7 @@
 from sys import maxsize
 
 
+
 class Contact:
     def __init__(self, firstname="", lastname="", company="", title="", address="", work_phone="", email="", bday="15",
                  bmonth="January", byear="2000", middlename="", nickname="", aday="5", amonth="July", ayear="2018",
@@ -44,3 +45,10 @@ class Contact:
             return int(self.id)
         else:
             return maxsize
+
+    def __repr__(self):
+        return "%s:%s:%s" % (self.id, self.firstname, self.lastname)
+
+
+    months = {1 : "January", 2 : "February", 3 : "March", 4 : "April", 5 : "May", 6 : "June", 7 : "July", 8 : "August",
+             9 : "September", 10 : "October", 11 : "November", 12 : "December"}
