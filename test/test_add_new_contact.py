@@ -8,8 +8,8 @@ def random_contact():
     return Contact(random_string("firstname",10), random_string("lastname", 10), random_string("company", 15),
             address=random_string("address", 10), work_phone=random_phone(8), phone2=random_phone(5),
             email2=random_email(5), email=random_email(4), email3=random_email(8), mobilephone=random_phone(9),
-            homephone=random_phone(6), amonth=Contact.months[random.randrange(13)], aday=str(random.randrange(32)),
-            bmonth=Contact.months[random.randrange(13)], bday=str(random.randrange(32)), byear=str(random.randrange(1900,2010)),
+            homephone=random_phone(6), amonth=Contact.months[random.randrange(1, 13)], aday=str(random.randrange(1, 32)),
+            bmonth=Contact.months[random.randrange(1, 13)], bday=str(random.randrange(1, 32)), byear=str(random.randrange(1900,2010)),
             middlename=random_string("middlename", 6), nickname=random_string("nickname", 9),
             title=random_string("title", 12))
 
