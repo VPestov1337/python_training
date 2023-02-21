@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from model.group import Group
-import pytest
-import random
-import string
 
 
-
-@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
-def test_add_group(app, group):
+def test_add_group(app, json_groups):
+    group = json_groups
     old_groups = app.group.get_groups_list()
     app.group.add(group)
     assert len(old_groups) + 1 == app.group.count()
