@@ -176,6 +176,25 @@ class ContactHelper:
                                                   address=address))
         return list(self.contact_cache)
 
+    def get_contacts_list_from_group(self, group_id):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_value(str(group_id))
+        contacts_list = []
+        for el in wd.find_elements_by_css_selector('[name="entry"]'):
+            cells = el.find_elements_by_css_selector("td")
+            lastname = cells[1].text
+            firstname = cells[2].text
+            address = cells[3].text
+            id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+            all_emails = cells[4].text
+            all_phones = cells[5].text
+            contacts_list.append(Contact(firstname=firstname, lastname=lastname, id=id,
+                                         all_phones_from_homepage=all_phones, all_emails=all_emails,
+                                         address=address))
+        return contacts_list
+
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_contact_to_edit_by_index(index)
@@ -194,7 +213,7 @@ class ContactHelper:
                        mobilephone=mobilephone, phone2=phone2, id=id, email=email, email2=email2, email3=email3,
                        address=address)
 
-    def get_contact_from_view_page(self,index):
+    def get_contact_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
@@ -204,3 +223,19 @@ class ContactHelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Contact(homephone=homephone, work_phone=workphone,
                        mobilephone=mobilephone, phone2=phone2, id=id)
+
+    def add_contact_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_xpath('//input[@value="%s"]' % contact_id).click()
+        wd.find_element_by_name("to_group").click()
+        Select(wd.find_element_by_name("to_group")).select_by_value(str(group_id))
+        wd.find_element_by_name("add").click()
+
+    def remove_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_value(str(group_id))
+        wd.find_element_by_css_selector("input[value='%s']" % contact_id).click()
+        wd.find_element_by_name("remove").click()

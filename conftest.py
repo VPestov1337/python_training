@@ -5,9 +5,11 @@ from fixture.db import DbFixture
 import jsonpickle
 import pytest
 from fixture.application import Application
+from fixture.orm import ORMFixture
 
 fixture = None
 target = None
+ormfixture = None
 
 def load_config(file):
     global target
@@ -50,6 +52,19 @@ def db(request):
         dbfixture.destroy()
     request.addfinalizer(fin)
     return dbfixture
+
+@pytest.fixture
+def orm(request):
+    global ormfixture
+    db_config = load_config(request.config.getoption("--target"))['db']
+    if ormfixture is None:
+        ormfixture = ORMFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'],
+                              password=db_config['password'])
+    def fin():
+        ormfixture.destroy()
+
+    request.addfinalizer(fin)
+    return ormfixture
 
 
 def pytest_addoption(parser):
