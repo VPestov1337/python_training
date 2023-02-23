@@ -107,6 +107,15 @@ class ContactHelper:
         self.goToContactsPage()
         self.contact_cache = None
 
+    def modify_contact_by_id(self, contact, id):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_xpath('//*[contains(@href,"edit.php?id=%s")]' % id).click()
+        self.fill_contact_fields(contact, wd)
+        wd.find_element_by_name('update').click()
+        self.goToContactsPage()
+        self.contact_cache = None
+
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
         self.goToContactsPage()
@@ -126,6 +135,17 @@ class ContactHelper:
         wd = self.app.wd
         self.goToContactsPage()
         wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_xpath('//input[@value="Delete"]').click()
+        time.sleep(0.1)
+        wd.switch_to.alert.accept()
+        time.sleep(0.05)
+        self.goToContactsPage()
+        self.contact_cache = None
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.goToContactsPage()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         time.sleep(0.1)
         wd.switch_to.alert.accept()
