@@ -3,7 +3,8 @@ import pymysql.cursors
 from model.contact import Contact
 from model.group import Group
 
-class DbFixture():
+
+class DbFixture:
     def __init__(self, host, name, user, password):
         self.host = host
         self.name = name
