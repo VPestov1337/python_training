@@ -9,5 +9,6 @@ try:
     for item in l:
         print(item)
     print(len(l))
+    print(db.get_max_group_id())
 finally:
     pass

@@ -43,6 +43,14 @@ class ORMFixture:
         return list(map(convert, contacts))
 
     @db_session
+    def get_max_group_id(self):
+        return max(entity.id for entity in ORMFixture.ORMGroup)
+
+    @db_session
+    def get_max_contact_id(self):
+        return max(entity.id for entity in ORMFixture.ORMContact)
+
+    @db_session
     def get_groups_list(self):
         return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup))
 
